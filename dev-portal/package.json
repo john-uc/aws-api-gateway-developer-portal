@@ -18,7 +18,7 @@
         "react-router-dom": "^4.3.1",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "0.85.0",
-        "swagger-ui": "git@github.com:swagger-api/swagger-ui.git#7cae0d2bdf079fe2f5514f58920eb9e3c1260d14",
+        "swagger-ui": "3.25.0",
         "yamljs": "^0.3.0"
     },
     "scripts": {
