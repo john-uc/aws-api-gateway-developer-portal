@@ -41,6 +41,7 @@ function main() {
 if (samTemplate && packageConfig && stackName && buildAssetsBucket && siteAssetsBucket && apiAssetsBucket && customersTableName) {
     main()
 } else {
+    
   !samTemplate && console.log('samTemplate must be defined')
   !packageConfig && console.log('packageConfig must be defined')
   !stackName && console.log('stackName must be defined')
