@@ -33,7 +33,7 @@ const customersTableName = getOptional('customersTableName')
 const preLoginAccountsTableName = getOptional('preLoginAccountsTableName')
 const feedbackTableName = getOptional('feedbackTableName')
 const cognitoIdentityPoolName = getOptional('cognitoIdentityPoolName')
-const regionName = getOptional('region', r('us-east-1'))
+const regionName = getOptional('region')
 
 // optional inputs
 const staticAssetRebuildMode = getOptional('staticAssetRebuildMode', '')
@@ -49,7 +49,7 @@ async function main () {
     '--output-template-file', packageConfig,
     '--s3-bucket', buildAssetsBucket,
     ...(awsSamCliProfile ? ['--profile', awsSamCliProfile] : []),
-    '--region', regionName
+    ...(regionName ? ['--region', regionName] : [])
   ])
   execute('sam', [
     'deploy',
@@ -69,7 +69,7 @@ async function main () {
     `CognitoDomainNameOrPrefix=${cognitoDomainName}`,
     '--s3-bucket', buildAssetsBucket,
     ...(awsSamCliProfile ? ['--profile', awsSamCliProfile] : []),
-    '--region', regionName
+    ...(regionName ? ['--region', regionName] : [])
   ])
   await writeConfig()
   console.log()
