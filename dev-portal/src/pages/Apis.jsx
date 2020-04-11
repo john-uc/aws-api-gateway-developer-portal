@@ -32,7 +32,7 @@ export default observer(class ApisPage extends React.Component {
         if (api) {
           let swaggerUiConfig = {
             dom_id: '#swagger-ui-container',
-            plugins: [SwaggerLayoutPlugin, SwaggerUIBundle.plugins.DownloadUrl],
+            plugins: [SwaggerLayoutPlugin],
             supportedSubmitMethods: [],
             spec: api.swagger,
             onComplete: () => {
@@ -43,7 +43,7 @@ export default observer(class ApisPage extends React.Component {
           if (isAuthenticated()) {
             delete swaggerUiConfig.supportedSubmitMethods
           }
-          let uiHandler = SwaggerUIBundle(swaggerUiConfig)
+          let uiHandler = SwaggerUI(swaggerUiConfig)
         }
       })
   }
