@@ -5,7 +5,7 @@ import React from 'react'
 
 // swagger-ui
 import SwaggerUI from '../swagger-ui'
-import 'swagger-ui/dist/swagger-ui.css'
+import '../swagger-ui/swagger-ui.css'
 
 // semantic-ui
 import { Container, Header, Icon } from 'semantic-ui-react'
