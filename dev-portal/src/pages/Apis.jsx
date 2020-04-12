@@ -4,7 +4,7 @@
 import React from 'react'
 
 // swagger-ui
-import SwaggerUI from './swagger-3.23.8'
+import SwaggerUI from '../../swagger-3.23.8'
 import 'swagger-ui/dist/swagger-ui.css'
 
 // semantic-ui
