@@ -18,6 +18,7 @@ import Home from 'pages/Home'
 import GettingStarted from 'pages/GettingStarted'
 import Dashboard from 'pages/Dashboard'
 import Apis from 'pages/Apis'
+import LearnNorm from 'pages/LearnNorm'
 import { Admin } from 'pages/Admin'
 
 // components
@@ -61,6 +62,7 @@ export const AdminRoute = ({ component: Component, ...rest }) => (
 // To shut up a dev warning
 const HomeWrap = props => <Home {...props} />
 const GettingStartedWrap = props => <GettingStarted {...props} />
+const LearnNormWrap = props => <LearnNorm {...props} />
 const DashboardWrap = props => <Dashboard {...props} />
 
 class App extends React.Component {
@@ -98,6 +100,7 @@ class App extends React.Component {
               }}
             />
             <Route path='/getting-started' component={GettingStartedWrap} />
+            <Route path='/learn-norm' component={LearnNormWrap} />
             <RegisteredRoute path='/dashboard' component={DashboardWrap} />
             <AdminRoute path='/admin' component={Admin} />
             <Route exact path='/apis' component={Apis} />
