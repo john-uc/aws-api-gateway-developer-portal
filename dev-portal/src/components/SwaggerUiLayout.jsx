@@ -63,6 +63,9 @@ function InfoReplacement ({ specSelectors }) {
           <SubscriptionButtons />
           {store.api.sdkGeneration && <GetSdkButton />}
         </div>
+        if (store.api.swagger.info.title == "UniCourt Norm APIs"){
+          <p> Learn more about norm API'S Click here </p>
+        }
       </div>
     </Container>}
   </Observer>
