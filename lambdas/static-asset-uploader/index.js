@@ -271,10 +271,12 @@ class State {
           } else if (this.event.ResourceProperties.RebuildMode === 'overwrite-content') {
             // always write everything on an overwrite
             console.log('pushing b/c RebuildMode=overwrite-content', data.path)
-          } else if (!/build\/custom-content/.test(data.path)) {
-            // only write non custom-content files on everything else
-            console.log('pushing b/c not custom', data.path)
-          } else {
+          } 
+          // else if (!/build\/custom-content/.test(data.path)) {
+          //   // only write non custom-content files on everything else
+          //   console.log('pushing b/c not custom', data.path)
+          // }
+          else {
             console.log('not pushing', data.path)
             return
           }
