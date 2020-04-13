@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react'
+import { isRegistered } from 'services/self'
 
 // mobx
 import { observer } from 'mobx-react'
@@ -14,6 +15,6 @@ import { Container } from 'semantic-ui-react'
 
 export default observer(() => (
   <Container style={{ padding: '40px' }}>
-    <fragments.LearnNorm.jsx />
+    {isRegistered() ? (<fragments.LearnNorm.jsx />): "Please Login"}
   </Container>
 ))

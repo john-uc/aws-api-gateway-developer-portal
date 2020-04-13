@@ -28,7 +28,7 @@ function InfoReplacement ({ specSelectors }) {
   const basePath = specSelectors.basePath()
   const host = specSelectors.host()
   const externalDocs = specSelectors.externalDocs()
-
+  const isNormAPI = (store.api.swagger.info.title == "UniCourt Norm APIs")
   return <Observer>
     {() => <Container fluid textAlign='left' className='fixfloat' style={{ padding: '40px 0px' }}>
       <div style={{ display: 'flex' }}>
@@ -61,11 +61,9 @@ function InfoReplacement ({ specSelectors }) {
           </div>
           <p>{externalDocs}</p>
           <SubscriptionButtons />
-          {store.api.sdkGeneration && <GetSdkButton />}
+          {store.api.sdkGeneration && <GetSdkButton />} 
+          { isNormAPI ? (<p> Learn more about norm API'S Click <a href='/learn-norm'>here</a> </p>) : <p></p>}
         </div>
-        if (store.api.swagger.info.title == "UniCourt Norm APIs"){
-          <p> Learn more about norm API'S Click <a href='/learn-norm'>here</a> </p>
-        }
       </div>
     </Container>}
   </Observer>
