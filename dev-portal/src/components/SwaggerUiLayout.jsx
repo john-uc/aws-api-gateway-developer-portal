@@ -52,7 +52,7 @@ function InfoReplacement ({ specSelectors }) {
               {store.api.generic && (
                 <p>{store.api.swagger.info.version}</p>
               )}
-              <p>https://{host}{basePath}</p>
+              <p></p>
               {store.api.swagger.info.description ? (
                 <p>{store.api.swagger.info.description}</p>
               ) : null}
