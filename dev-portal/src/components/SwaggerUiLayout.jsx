@@ -62,7 +62,7 @@ function InfoReplacement ({ specSelectors }) {
           <p>{externalDocs}</p>
           <SubscriptionButtons />
           {store.api.sdkGeneration && <GetSdkButton />} 
-          { isNormAPI ? (<p> Learn more about norm API'S Click <a href='/learn-norm'>here</a> </p>) : <p></p>}
+          { isNormAPI ? (<p>To learn more about Norm APIs <a href='/learn-norm'>click here</a> </p>) : <p></p>}
         </div>
       </div>
     </Container>}

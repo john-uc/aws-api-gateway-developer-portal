@@ -265,8 +265,6 @@ class State {
       klaw('./build')
         .on('data', (data) => {
           if (data.stats.isDirectory()) return
-          // skip config - we generate that later
-          if (!/build\/config\.js$/.test(data.path)) return
           if (this.event.RequestType === 'Create') {
             // always write everything on Creates
             console.log('pushing b/c Create', data.path)
