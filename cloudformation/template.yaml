@@ -103,6 +103,9 @@ Parameters:
   #   Type: String
   #   Description: Doesn't yet do anything. Oh well.
   #   Default: ''
+  ExistingCognitoUserPool:
+    Type: String
+    Description: The existing User Pool ID. Leave blank to create a new User Pool.
 
   CustomDomainName:
     Type: String
@@ -160,6 +163,7 @@ Conditions:
   NotDevelopmentMode: !Not [!Condition DevelopmentMode]
   InUSEastOne: !Equals [!Ref 'AWS::Region', 'us-east-1']
   InviteAccountRegistrationMode: !Equals [!Ref AccountRegistrationMode, 'invite']
+  CreateCognitoUserPool: !Equals [!Ref ExistingCognitoUserPool, '']
 
 Resources:
   ApiGatewayApi:
@@ -1087,7 +1091,7 @@ Resources:
           - ':'
           - !Ref 'AWS::AccountId'
           - ':userpool/'
-          - !Ref CognitoUserPool
+          - !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
 
   CognitoPostConfirmationTriggerFnExecutionPermission:
     Type: AWS::Lambda::Permission
@@ -1102,7 +1106,7 @@ Resources:
           - ':'
           - !Ref 'AWS::AccountId'
           - ':userpool/'
-          - !Ref CognitoUserPool
+          - !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
 
   CognitoPostAuthenticationTriggerFnExecutionPermission:
     Type: AWS::Lambda::Permission
@@ -1117,7 +1121,7 @@ Resources:
           - ':'
           - !Ref 'AWS::AccountId'
           - ':userpool/'
-          - !Ref CognitoUserPool
+          - !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
 
   LambdaSNSExecutionPermission:
     Type: AWS::Lambda::Permission
@@ -1258,6 +1262,7 @@ Resources:
 
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
+    Condition: CreateCognitoUserPool    
     Properties:
       UserPoolName: !Ref CognitoIdentityPoolName
       # Lambda trigger caveats:
@@ -1332,7 +1337,7 @@ Resources:
     # However, when this is updated and changes, the CUPCS custom resource doesn't re-run, and so a bunch of vital
     # settings won't be set, e.g., CallbackURL.
     Properties:
-      UserPoolId: !Ref CognitoUserPool
+      UserPoolId: !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
       ClientName: CognitoIdentityPool
       GenerateSecret: false
       RefreshTokenValidity: 30
@@ -1386,7 +1391,7 @@ Resources:
     Properties:
       Timeout: 360
       ServiceToken: !GetAtt CognitoUserPoolClientSettingsBackingFn.Arn
-      UserPoolId: !Ref CognitoUserPool
+      UserPoolId: !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
       UserPoolClientId: !Ref CognitoUserPoolClient
       SupportedIdentityProviders: [ "COGNITO" ] # should (eventually) allow people to add values
       CallbackURL: !If [ LocalDevelopmentMode,
@@ -1467,6 +1472,7 @@ Resources:
 
   CognitoUserPoolDomain:
     Type: AWS::CloudFormation::CustomResource
+    Condition: CreateCognitoUserPool
     Properties:
       Timeout: 360
       ServiceToken: !GetAtt CognitoUserPoolDomainBackingFn.Arn
@@ -1485,7 +1491,7 @@ Resources:
             - - cognito-idp.
               - !Ref 'AWS::Region'
               - .amazonaws.com/
-              - !Ref CognitoUserPool
+              - !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
 
   CognitoIdentityPoolRoles:
     Type: AWS::Cognito::IdentityPoolRoleAttachment
@@ -1619,7 +1625,7 @@ Resources:
       # since admin group has a precedence of 0, it takes priority
       Precedence: 0
       RoleArn: !GetAtt CognitoAdminRole.Arn
-      UserPoolId: !Ref CognitoUserPool
+      UserPoolId: !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
 
   CognitoRegisteredGroup:
     Type: AWS::Cognito::UserPoolGroup
@@ -1678,9 +1684,9 @@ Resources:
       RestApiId: !Ref ApiGatewayApi
       Region: !Ref 'AWS::Region'
       IdentityPoolId: !Ref CognitoIdentityPool
-      UserPoolId: !Ref CognitoUserPool
+      UserPoolId: !If [CreateCognitoUserPool, !Ref CognitoUserPool, !Ref ExistingCognitoUserPool]
       UserPoolClientId: !Ref CognitoUserPoolClient
-      UserPoolDomain: !GetAtt CognitoUserPoolDomain.FullUrl
+      UserPoolDomain: !If [ CreateCognitoUserPool, !GetAtt CognitoUserPoolDomain.FullUrl, !Ref CognitoDomainNameOrPrefix ]
       MarketplaceSuffix: !Ref MarketplaceSubscriptionTopicProductCode
       RebuildToken: !Ref StaticAssetRebuildToken
       RebuildMode: !Ref StaticAssetRebuildMode
