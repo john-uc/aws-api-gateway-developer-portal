@@ -37,9 +37,9 @@ export const NavBar = observer(
           {fragments.Home.title}
         </MenuLink>
 
-        <MenuLink to='/getting-started'>{fragments.GettingStarted.title}</MenuLink>
+        <MenuLink to='/getting-started'>Get Started</MenuLink>
         <MenuLink to='/apis'>{fragments.APIs.title}</MenuLink>
-        {isRegistered() && <MenuLink to='/learn-norm'>Learn More</MenuLink>}
+        {isRegistered() && <MenuLink to='/learn-norm'>Our Normalization - Learn More</MenuLink>}
 
         <Menu.Menu position='right'>
           {isAuthenticated() ? <>
