@@ -34,12 +34,12 @@ export const NavBar = observer(
       return <Menu inverted borderless attached style={{ flex: '0 0 auto' }} stackable>
         <MenuLink to='/'>
           <Image size='mini' src='/custom-content/nav-logo.png' style={{ paddingRight: '10px' }} />
-          {fragments.Home.title}
+          Developer Portal
         </MenuLink>
 
-        <MenuLink to='/getting-started'>Get Started</MenuLink>
+        <MenuLink to='/getting-started'>Getting Started</MenuLink>
         <MenuLink to='/apis'>{fragments.APIs.title}</MenuLink>
-        {isRegistered() && <MenuLink to='/learn-norm'>Our Normalization - Learn More</MenuLink>}
+        {isRegistered() && <MenuLink to='/learn-norm'>Normalization FAQs</MenuLink>}
 
         <Menu.Menu position='right'>
           {isAuthenticated() ? <>
