@@ -82,6 +82,7 @@ const RegisteredAccounts = () => {
           AccountsTableColumns.DateRegistered,
           AccountsTableColumns.RegistrationMethod,
           AccountsTableColumns.ApiKeyId,
+          AccountsTableColumns.AccountUserId,
         ]}
         loading={loading}
         selectedAccount={selectedAccount}

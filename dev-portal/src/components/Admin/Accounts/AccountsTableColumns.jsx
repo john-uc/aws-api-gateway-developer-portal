@@ -49,6 +49,12 @@ export const RegistrationMethod = {
   render: account => account.RegistrationMethod,
 }
 
+export const AccountUserId = {
+  id: 'AccountUserID',
+  title: 'Account User ID',
+  render: account => account.UserId,
+}
+
 export const ApiKeyId = {
   id: 'ApiKeyId',
   title: 'API key ID',

@@ -37,5 +37,5 @@ A developer account provides you with an API Key for accessing our APIs, a playg
  
  
 Depending on the API configuration, subscribing to one API may subscribe you to several APIs. These APIs may have related functionality or share a pricing plan. Requests against any of these APIs will be counted together in your usage.
-[line break]
+
 UniCourt Norm APIs are in Alpha stage and available for customers to try out. If you are an existing customer, [please contact us to get access.](https://unicourt.com/contact-us)
