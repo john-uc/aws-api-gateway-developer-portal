@@ -44,7 +44,7 @@ This greatly reduces the number of false positives and false negatives, so you d
 
 ##
 
-## How Does Entity Normalization work?
+## How Does Entity Normalization Work?
 
 **The scope of entity normalization is a state-wide jurisdiction for each state in the US, as well as a federal jurisdiction for all federal courts in the US.** These jurisdictions are referred to as norm\_jurisdiction in the Norm APIs.
 
@@ -191,7 +191,7 @@ Different norm jurisdictions have different ways of representing the same data. 
 
 ##
 
-## What Entities are Normalized?
+## What Entities Are Normalized?
 
 UniCourt normalizes attorneys, law firms, judges, and parties (except for individuals).
 
