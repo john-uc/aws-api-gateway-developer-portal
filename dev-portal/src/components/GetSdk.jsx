@@ -11,7 +11,7 @@ import { modal } from 'components/Modal'
 import { addNotification } from 'components/AlertPopup'
 
 import { observer } from 'mobx-react'
-import * as YAML from 'yamljs'
+import YAML from 'yaml'
 
 import _ from 'lodash'
 
