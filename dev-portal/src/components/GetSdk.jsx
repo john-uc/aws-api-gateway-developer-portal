@@ -465,7 +465,7 @@ function downloadFile (dataUri, fileName) {
 function downloadAPISpecFile (dataUri, fileName, ext) {
   
   var dataStr = ""
-  if (ext == "json") {
+  if (ext === "json") {
      dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(dataUri);
   }
   else {
