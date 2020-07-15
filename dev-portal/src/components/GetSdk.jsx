@@ -39,6 +39,22 @@ export const GetSdkButton = observer(() => {
   )
 })
 
+
+export const GetExportButton = observer(() => {
+  return (
+    <span>
+      <Dropdown text='Export API' pointing className='link item'>
+        {exportTypes.map((type) => (
+          <div className='item' key={type.id} onClick={() => confirmDownload(type, getExport)}>
+            {type.friendlyName}
+          </div>
+        ))}
+      </Dropdown>
+      {store.api.downloadingSdkOrApi && <Loader active inline size='tiny' />}
+    </span>
+  )
+})
+
 class Dropdown extends React.Component {
   constructor (props) {
     super(props)
@@ -358,24 +374,6 @@ const exportTypes = [
     description: '',
     configurationProperties: [
       {
-        name: 'extensions.integrations',
-        friendlyName: 'Include x-amazon-apigateway-integration extensions',
-        description: '',
-        type: 'checkbox'
-      },
-      {
-        name: 'extensions.authorizers',
-        friendlyName: 'Include x-amazon-apigateway-authorizer extensions',
-        description: '',
-        type: 'checkbox'
-      },
-      {
-        name: 'extensions.postman',
-        friendlyName: 'Include extensions to allow importing into Postman',
-        description: '',
-        type: 'checkbox'
-      },
-      {
         name: 'accept',
         friendlyName: 'Export format',
         description: '',
@@ -394,24 +392,6 @@ const exportTypes = [
     longName: 'Swagger (OpenAPI 2) definitions',
     description: '',
     configurationProperties: [
-      {
-        name: 'extensions.integrations',
-        friendlyName: 'Include x-amazon-apigateway-integration extensions',
-        description: '',
-        type: 'checkbox'
-      },
-      {
-        name: 'extensions.authorizers',
-        friendlyName: 'Include x-amazon-apigateway-authorizer extensions',
-        description: '',
-        type: 'checkbox'
-      },
-      {
-        name: 'extensions.postman',
-        friendlyName: 'Include extensions to allow importing into Postman',
-        description: '',
-        type: 'checkbox'
-      },
       {
         name: 'accept',
         friendlyName: 'Export format',
