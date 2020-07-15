@@ -43,7 +43,7 @@ export const GetSdkButton = observer(() => {
 export const GetExportButton = observer(() => {
   return (
     <span>
-      <Dropdown text='Export API' pointing className='link item'>
+      <Dropdown text='Export API Specs' pointing className='link item'>
         {exportTypes.map((type) => (
           <div className='item' key={type.id} onClick={() => confirmDownload(type, getExport)}>
             {type.friendlyName}
