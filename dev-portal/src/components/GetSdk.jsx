@@ -416,7 +416,7 @@ function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters })
   var outputFileName = `${apiId}_${stageName}-${sdkType || exportType}.zip`
   var ext = ""
   if (exportType){
-    ext = (parameters.get("accept") === "application/yaml" ? "yaml" : "json")
+    ext = (parameters["accept"] === "application/yaml" ? "yaml" : "json")
     outputFileName = `${store.api.swagger.info.title.replace(" ", "_")}_Spec_${stageName}.${ext}`
   }
   
