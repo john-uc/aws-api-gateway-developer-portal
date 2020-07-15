@@ -416,8 +416,8 @@ function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters })
   var outputFileName = `${apiId}_${stageName}-${sdkType || exportType}.zip`
   var ext = ""
   if (exportType){
-    var ext = (parameters.get("accept") == "application/yaml" ? "yaml" : "json")
-    var outputFileName = `${store.api.swagger.info.title.replace(" ", "_")}_Spec_${stageName}.${ext}`
+    ext = (parameters.get("accept") === "application/yaml" ? "yaml" : "json")
+    outputFileName = `${store.api.swagger.info.title.replace(" ", "_")}_Spec_${stageName}.${ext}`
   }
   
 
@@ -464,11 +464,12 @@ function downloadFile (dataUri, fileName) {
 
 function downloadAPISpecFile (dataUri, fileName, ext) {
   
+  var dataStr = ""
   if (ext == "json") {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(dataUri);
+     dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(dataUri);
   }
   else {
-    var dataStr = "data:text/yaml;charset=utf-8," + encodeURIComponent(dataUri);
+     dataStr = "data:text/yaml;charset=utf-8," + encodeURIComponent(dataUri);
   }
 
 
