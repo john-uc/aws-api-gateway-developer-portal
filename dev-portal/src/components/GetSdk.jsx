@@ -11,6 +11,7 @@ import { modal } from 'components/Modal'
 import { addNotification } from 'components/AlertPopup'
 
 import { observer } from 'mobx-react'
+import * as YAML from 'yamljs'
 
 import _ from 'lodash'
 
@@ -466,10 +467,10 @@ function downloadAPISpecFile (dataUri, fileName, ext) {
   
   var dataStr = ""
   if (ext === "json") {
-     dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(dataUri);
+     dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataUri, null, 5));
   }
   else {
-     dataStr = "data:text/yaml;charset=utf-8," + encodeURIComponent(dataUri);
+     dataStr = "data:text/yaml;charset=utf-8," + encodeURIComponent(YAML.stringify(dataUri, 4, 2));
   }
 
 
