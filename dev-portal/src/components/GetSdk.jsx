@@ -466,6 +466,18 @@ function downloadFile (dataUri, fileName) {
 function downloadAPISpecFile (dataUri, fileName, ext) {
   
   var dataStr = ""
+  // adding this code because the URL in the swagger documentation was comming with // which fails while trying the API's 
+  if (dataUri["servers"]) {
+    for (i =0;i < dataUri["servers"].length; i++) {
+       if (dataUri["servers"][i]["variables"] && dataUri["servers"][i]["variables"]["basePath"]) {
+           if (dataUri["servers"][i]["variables"]["basePath"]["default"][0] ==="/") {
+               var correctedUrl = dataUri["servers"][i]["url"]
+               dataUri["servers"][i]["url"] = correctedUrl.replace("/{basePath}" ,"{basePath}")
+           }
+       }
+     }
+   }
+
   if (ext === "json") {
      dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataUri, null, 5));
   }
