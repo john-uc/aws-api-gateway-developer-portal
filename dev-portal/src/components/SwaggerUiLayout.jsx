@@ -10,7 +10,7 @@ import { Button, Header, Image, Container } from 'semantic-ui-react'
 import { subscribe, unsubscribe } from 'services/api-catalog'
 import { isAuthenticated } from 'services/self'
 
-import { GetSdkButton, GetExportButton } from 'components/GetSdk'
+import { GetSdkButton } from 'components/GetSdk'
 
 // state
 import { observer, Observer } from 'mobx-react'
@@ -61,8 +61,7 @@ function InfoReplacement ({ specSelectors }) {
           </div>
           <p>{externalDocs}</p>
           <SubscriptionButtons />
-{/*           {store.api.sdkGeneration && <GetSdkButton />}  */}
-              <GetExportButton />
+          {store.api.sdkGeneration && <GetSdkButton />} 
           { isNormAPI ? (<p>To learn more about Norm APIs <a href='/learn-norm'>click here</a> </p>) : <p></p>}
         </div>
       </div>

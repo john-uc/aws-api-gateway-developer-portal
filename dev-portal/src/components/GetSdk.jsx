@@ -20,14 +20,20 @@ import _ from 'lodash'
 export const GetSdkButton = observer(() => {
   return (
     <span>
+      {/*  
+      @john Fernandes - 2020-07-15
+      I am commenting this out as we currently do not support SDK generation. 
+      Please contact me before u uncomment this. 
+
       <Dropdown text='Download SDK' pointing className='link item'>
         {sdkTypes.map((type) => (
           <div className='item' key={type.id} onClick={() => confirmDownload(type, getSdk)}>
             {type.friendlyName}
           </div>
         ))}
-      </Dropdown>
-      <Dropdown text='Export API' pointing className='link item'>
+      </Dropdown> */}
+
+      <Dropdown text='Download API Specs' pointing className='link item'>
         {exportTypes.map((type) => (
           <div className='item' key={type.id} onClick={() => confirmDownload(type, getExport)}>
             {type.friendlyName}
@@ -39,21 +45,6 @@ export const GetSdkButton = observer(() => {
   )
 })
 
-
-export const GetExportButton = observer(() => {
-  return (
-    <span>
-      <Dropdown text='Export API Specs' pointing className='link item'>
-        {exportTypes.map((type) => (
-          <div className='item' key={type.id} onClick={() => confirmDownload(type, getExport)}>
-            {type.friendlyName}
-          </div>
-        ))}
-      </Dropdown>
-      {store.api.downloadingSdkOrApi && <Loader active inline size='tiny' />}
-    </span>
-  )
-})
 
 class Dropdown extends React.Component {
   constructor (props) {
@@ -422,6 +413,13 @@ const exportTypes = [
 function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters }) {
   const apiId = store.api.apiId || store.api.id
   const stageName = store.api.stage
+  var outputFileName = `${apiId}_${stageName}-${sdkType || exportType}.zip`
+  var ext = ""
+  if (exportType){
+    var ext = (parameters.get("accept") == "application/yaml" ? "yaml" : "json")
+    var outputFileName = `${store.api.swagger.info.title.replace(" ", "_")}_Spec_${stageName}.${ext}`
+  }
+  
 
   store.api.downloadingSdkOrApi = true
 
@@ -437,7 +435,8 @@ function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters })
       }
     ))
     .then(({ data }) => {
-      downloadFile(data, `${apiId}_${stageName}-${sdkType || exportType}.zip`)
+      // File Generation is broken , fixed it with downloadAPISpecFile
+      (sdkType? downloadFile(data, outputFileName) : downloadAPISpecFile(data, outputFileName, ext))
     })
     .catch(({ data } = {}) => {
       addNotification({ header: `An error occurred while attempting to download the ${blobType}.`, content: data.message })
@@ -447,28 +446,33 @@ function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters })
     })
 }
 
-// function downloadFile (dataUri, fileName) {
-//   // leaving this as a comment so we know how to switch to a file in the future
-//   // const reader = new FileReader()
-//   // reader.onloadend = () => {
-//   const downloadLinkElement = document.createElement('a')
-//   downloadLinkElement.setAttribute('href', dataUri)
-//   downloadLinkElement.setAttribute('download', fileName)
-//   downloadLinkElement.style.display = 'none'
-//
-//   document.body.appendChild(downloadLinkElement)
-//   downloadLinkElement.click()
-//   document.body.removeChild(downloadLinkElement)
-//   // }
-//   // reader.readAsDataURL(data)
-// }
-
 function downloadFile (dataUri, fileName) {
   // leaving this as a comment so we know how to switch to a file in the future
   // const reader = new FileReader()
   // reader.onloadend = () => {
   const downloadLinkElement = document.createElement('a')
-  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataUri));
+  downloadLinkElement.setAttribute('href', dataUri)
+  downloadLinkElement.setAttribute('download', fileName)
+  downloadLinkElement.style.display = 'none'
+
+  document.body.appendChild(downloadLinkElement)
+  downloadLinkElement.click()
+  document.body.removeChild(downloadLinkElement)
+  // }
+  // reader.readAsDataURL(data)
+}
+
+function downloadAPISpecFile (dataUri, fileName, ext) {
+  
+  if (ext == "json") {
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(dataUri);
+  }
+  else {
+    var dataStr = "data:text/yaml;charset=utf-8," + encodeURIComponent(dataUri);
+  }
+
+
+  const downloadLinkElement = document.createElement('a')
 
   downloadLinkElement.setAttribute('href', dataStr)
   downloadLinkElement.setAttribute('download', fileName)
