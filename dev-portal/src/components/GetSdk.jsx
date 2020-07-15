@@ -447,12 +447,30 @@ function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters })
     })
 }
 
+// function downloadFile (dataUri, fileName) {
+//   // leaving this as a comment so we know how to switch to a file in the future
+//   // const reader = new FileReader()
+//   // reader.onloadend = () => {
+//   const downloadLinkElement = document.createElement('a')
+//   downloadLinkElement.setAttribute('href', dataUri)
+//   downloadLinkElement.setAttribute('download', fileName)
+//   downloadLinkElement.style.display = 'none'
+//
+//   document.body.appendChild(downloadLinkElement)
+//   downloadLinkElement.click()
+//   document.body.removeChild(downloadLinkElement)
+//   // }
+//   // reader.readAsDataURL(data)
+// }
+
 function downloadFile (dataUri, fileName) {
   // leaving this as a comment so we know how to switch to a file in the future
   // const reader = new FileReader()
   // reader.onloadend = () => {
   const downloadLinkElement = document.createElement('a')
-  downloadLinkElement.setAttribute('href', dataUri)
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataUri));
+
+  downloadLinkElement.setAttribute('href', dataStr)
   downloadLinkElement.setAttribute('download', fileName)
   downloadLinkElement.style.display = 'none'
 
