@@ -366,6 +366,12 @@ const exportTypes = [
     description: '',
     configurationProperties: [
       {
+        name: 'extensions.postman',
+        friendlyName: 'Include extensions to allow importing into Postman',
+        description: '',
+        type: 'checkbox'
+      },
+      {
         name: 'accept',
         friendlyName: 'Export format',
         description: '',
@@ -384,6 +390,12 @@ const exportTypes = [
     longName: 'Swagger (OpenAPI 2) definitions',
     description: '',
     configurationProperties: [
+      {
+        name: 'extensions.postman',
+        friendlyName: 'Include extensions to allow importing into Postman',
+        description: '',
+        type: 'checkbox'
+      },
       {
         name: 'accept',
         friendlyName: 'Export format',
