@@ -1,7 +1,7 @@
 // Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { apiGatewayClient } from 'services/api'
+import { apiGatewayClientWithCredentials } from 'services/api'
 import { store } from 'services/state'
 
 import React from 'react'
@@ -423,7 +423,7 @@ const exportTypes = [
  *
  */
 
-function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters }) {
+function fetchBlob ({ blobType, endpointName, sdkType, exportType, ext, parameters }) {
   const apiId = store.api.apiId || store.api.id
   const stageName = store.api.stage
   var outputFileName = `${apiId}_${stageName}-${sdkType || exportType}.zip`
@@ -432,37 +432,34 @@ function fetchBlob ({ blobType, endpointName, sdkType, exportType, parameters })
     ext = (parameters["accept"] === "application/yaml" ? "yaml" : "json")
     outputFileName = `${store.api.swagger.info.title.replace(" ", "_")}_Spec_${stageName}.${ext}`
   }
-  
 
   store.api.downloadingSdkOrApi = true
 
-  return apiGatewayClient()
+  return apiGatewayClientWithCredentials()
     .then(apiGatewayClient => apiGatewayClient.get(
       `/catalog/${apiId}_${stageName}/${endpointName}`,
       { sdkType },
       {},
       {
-        queryParams: { exportType, parameters: JSON.stringify(parameters) }
-        // leaving this as a comment so we know how to switch to a file in the future
-        // config: { responseType: "blob" }
+        queryParams: { exportType, parameters: JSON.stringify(parameters) },
+        config: { responseType: 'blob' }
       }
     ))
     .then(({ data }) => {
       // File Generation is broken , fixed it with downloadAPISpecFile
       (sdkType? downloadFile(data, outputFileName) : downloadAPISpecFile(data, outputFileName, ext))
     })
-    .catch(({ data } = {}) => {
-      addNotification({ header: `An error occurred while attempting to download the ${blobType}.`, content: data.message })
-    })
+    .catch(({ data }) => data.text().then(text => {
+      const result = JSON.parse(text)
+      addNotification({ header: `An error occurred while attempting to download the ${blobType}.`, content: result && result.message })
+    }))
     .finally(() => {
       store.api.downloadingSdkOrApi = false
     })
 }
 
-function downloadFile (dataUri, fileName) {
-  // leaving this as a comment so we know how to switch to a file in the future
-  // const reader = new FileReader()
-  // reader.onloadend = () => {
+function downloadFile (blob, fileName) {
+  const dataUri = URL.createObjectURL(blob)
   const downloadLinkElement = document.createElement('a')
   downloadLinkElement.setAttribute('href', dataUri)
   downloadLinkElement.setAttribute('download', fileName)
@@ -471,8 +468,7 @@ function downloadFile (dataUri, fileName) {
   document.body.appendChild(downloadLinkElement)
   downloadLinkElement.click()
   document.body.removeChild(downloadLinkElement)
-  // }
-  // reader.readAsDataURL(data)
+  URL.revokeObjectURL(dataUri)
 }
 
 function downloadAPISpecFile (dataUri, fileName, ext) {
@@ -516,6 +512,7 @@ function getSdk (sdkType, parameters = {}) {
   return fetchBlob({
     blobType: 'SDK',
     endpointName: 'sdk',
+    ext: '.zip',
     sdkType,
     parameters
   })
@@ -538,6 +535,7 @@ function getExport (exportType, parameters = {}) {
   return fetchBlob({
     blobType: 'API export',
     endpointName: 'export',
+    ext: '.json',
     exportType,
     parameters
   })
