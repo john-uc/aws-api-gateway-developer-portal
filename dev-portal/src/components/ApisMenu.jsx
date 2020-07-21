@@ -18,7 +18,10 @@ import SidebarHeader from 'components/Sidebar/SidebarHeader'
 import MenuLink from 'components/MenuLink'
 
 function getApisWithStages (selectedApiId, selectedStage, activateFirst) {
-  const apiList = [].concat(_.get(store, 'apiList.generic', []), _.get(store, 'apiList.apiGateway', [])).map(api => ({
+  // @john fernandes 
+  // Commenting the generics API's out here because we do not need them. 
+  // removed _.get(store, 'apiList.generic')
+  const apiList = [].concat(_.get(store, 'apiList.apiGateway', [])).map(api => ({
     group: api.apiId || api.id,
     id: api.apiStage || api.id,
     title: api.swagger.info.title,
