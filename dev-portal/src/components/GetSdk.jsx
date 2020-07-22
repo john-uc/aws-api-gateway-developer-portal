@@ -441,7 +441,7 @@ function fetchBlob ({ blobType, endpointName, sdkType, exportType, ext, paramete
       {},
       {
         queryParams: { exportType, parameters: JSON.stringify(parameters) },
-        config: { responseType: 'blob' }
+        // config: { responseType: 'blob' }
       }
     ))
     .then(({ data }) => {
