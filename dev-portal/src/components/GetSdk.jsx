@@ -474,6 +474,15 @@ function downloadAPISpecFile (dataUri, fileName, ext) {
   
   var dataStr = ""
   // adding this code because the URL in the swagger documentation was comming with // which fails while trying the API's 
+
+  // @john Fernandes
+  // adding this code because of the following issue with the documentation
+  // https://github.com/deliveryhero/serverless-aws-documentation/issues/86
+  
+  var result = JSON.parse(JSON.stringify(dataUri, function(key, value) {
+    return key !== 'options' ? value : undefined;
+  }));
+  dataUri = result
   if (dataUri["servers"]) {
     for (var i =0 ; i < dataUri["servers"].length; i++) {
        if (dataUri["servers"][i]["variables"] && dataUri["servers"][i]["variables"]["basePath"]) {
