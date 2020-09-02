@@ -48,11 +48,14 @@ exports.post = async(req, res) => {
         inviterUserId
     })
     const catalog = await util.catalog()
+    await customersController.approveAccountPendingRequest(preLoginAccount.UserId)
+    const getCognitoIdentityId = customersController.getCognitoIdentityId(preLoginAccount.UserId)
+    console.log(`Received CognitioIdentityID as ${getCognitoIdentityId}`)
     for (const usagePlan of catalog.apiGateway) {
         const data = await new Promise((resolve, reject) => {
-            customersController.subscribe(preLoginAccount.UserId, usagePlan.id, reject, resolve)
+            customersController.subscribe(getCognitoIdentityId, usagePlan.id, reject, resolve)
         })
-        console.log(`Added User ${preLoginAccount.UserId} to Plan ${usagePlan.id}`)
+        console.log(`Added User ${getCognitoIdentityId} to Plan ${usagePlan.id}`)
     }
     res.status(200).json(preLoginAccount)
 }
