@@ -99,9 +99,9 @@ const SubscriptionButtons = observer(class SubscriptionButtons extends React.Com
     if (apiIsSubscribable) {
       return (
         api.subscribed ? (
-          <Button onClick={() => unsubscribe(api.usagePlan.id)}>Unsubscribe</Button>
+          <p> You are Subscribed to use this API </p>
         ) : (
-          <Button onClick={() => subscribe(api.usagePlan.id)}>Subscribe</Button>
+          subscribe(api.usagePlan.id)
         )
       )
     } else {
