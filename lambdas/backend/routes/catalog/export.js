@@ -26,7 +26,7 @@ exports.get = async (req, res) => {
     console.log(parameters)
     const resultsBuffer = (await util.apigateway.getExport({
       restApiId,
-      exportType: req.query.exportType,
+      exportType: 'oas30',
       stageName,
       parameters
     }).promise()).body

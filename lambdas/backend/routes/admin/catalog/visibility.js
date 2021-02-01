@@ -114,7 +114,7 @@ exports.post = async (req, res) => {
     const swagger = await util.apigateway.getExport({
       restApiId: req.body.apiKey.split('_')[0],
       stageName: req.body.apiKey.split('_')[1],
-      exportType: 'swagger',
+      exportType: 'oas30',
       parameters: {
         extensions: 'apigateway'
       }
