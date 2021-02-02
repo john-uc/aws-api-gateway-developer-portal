@@ -60,20 +60,6 @@ function InfoReplacement ({ specSelectors }) {
         </div>
         <div>
           <Header as='h1'>{apiTitle}</Header>
-          {/* <div style={{ display: 'flex', paddingBottom: '1em' }}>
-            <div style={{ marginRight: '20px' }}>
-              {store.api.apiStage == null ? <p style={{ fontWeight: 'bold' }}>Version</p> : null}
-              {endpoint ? <p style={{ fontWeight: 'bold' }}>Endpoint</p> : null}
-              {apiDescription ? <p style={{ fontWeight: 'bold' }}>Description</p> : null}
-              {/* <p style={{ fontWeight: "bold" }}>Usage Plan</p> */}
-            </div>
-            <div>
-              {store.api.apiStage == null ? <p>{version}</p> : null}
-              {endpoint ? <p>{endpoint}</p> : null}
-              {apiDescription ? <div class="infodescp"> <pre>{parser(apiDescription)}</pre> </div>: null}
-              {/* <p>{store.api.usagePlan.name}</p> */}
-            </div>
-          </div> */}
           {apiDescription ? <div class="infodescp"> <pre>{parser(apiDescription)}</pre> </div>: null}
           {externalDocs ? (
             <div style={{ paddingBottom: '1em' }}>
