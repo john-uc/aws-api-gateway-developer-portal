@@ -49,3 +49,9 @@ h1, h2, h3, h4, h5 {
 .ui.inverted.menu .menu a.item:hover {
   color: #ffffff;
 }
+
+div.infodescp {
+  width: 75%;
+  overflow: scroll; 
+  background-color:rgb(212, 225, 238);
+}
