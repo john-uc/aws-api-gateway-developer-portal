@@ -55,12 +55,9 @@ function InfoReplacement ({ specSelectors }) {
     */}
     {() => store.api == null ? null : <Container fluid textAlign='left' className='fixfloat' style={{ padding: '40px 0px' }}>
       <div style={{ display: 'flex' }}>
-        <div style={{ flex: '0 0 auto', marginRight: '20px' }}>
-          <Image size='small' src={store.api.logo} />
-        </div>
         <div>
           <Header as='h1'>{apiTitle}</Header>
-          {apiDescription ? <div class="infodescp"> <pre>{parser(apiDescription)}</pre> </div>: null}
+          {apiDescription ? <div class="infodescp wrapper"> <pre>{parser(apiDescription)}</pre> </div>: null}
           {externalDocs ? (
             <div style={{ paddingBottom: '1em' }}>
               {docsDescription ? <Markdown source={docsDescription} /> : null}
@@ -89,7 +86,7 @@ const SubscriptionButtons = observer(class SubscriptionButtons extends React.Com
     if (apiIsSubscribable) {
       return (
         api.subscribed ? (
-          <p> You are Subscribed to use this API </p>
+          <p></p>
         ) : (
           subscribe(api.usagePlan.id)
         )
