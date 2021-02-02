@@ -70,7 +70,8 @@ function InfoReplacement ({ specSelectors }) {
             <div>
               {store.api.apiStage == null ? <p>{version}</p> : null}
               {endpoint ? <p>{endpoint}</p> : null}
-              {apiDescription ? <p>{parser(apiDescription)}</p> : null}
+              {/* {apiDescription ? <p>{parser(apiDescription)}</p> : null} */}
+              {apiDescription ? <Markdown source={apiDescription} /> : null}
               {/* <p>{store.api.usagePlan.name}</p> */}
             </div>
           </div>
