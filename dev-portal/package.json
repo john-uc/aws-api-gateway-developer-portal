@@ -21,7 +21,8 @@
         "semantic-ui-react": "^0.87.3",
         "swagger-ui": "file:swagger-3.23.8",
         "yamljs": "^0.3.0",
-        "yaml": "^1.10.0"
+        "yaml": "^1.10.0",
+        "html-react-parser": "1.2.4",
     },
     "scripts": {
         "start": "react-scripts start",

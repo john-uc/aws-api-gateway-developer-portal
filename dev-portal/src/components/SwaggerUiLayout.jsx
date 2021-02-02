@@ -9,6 +9,9 @@ import { Button, Header, Image, Container } from 'semantic-ui-react'
 // markdown for external docs description
 import Markdown from 'react-markdown/with-html'
 
+// import html-react-parser
+import parser from 'html-react-parser'
+
 // services
 import { subscribe, unsubscribe } from 'services/api-catalog'
 import { isAuthenticated } from 'services/self'
@@ -67,7 +70,7 @@ function InfoReplacement ({ specSelectors }) {
             <div>
               {store.api.apiStage == null ? <p>{version}</p> : null}
               {endpoint ? <p>{endpoint}</p> : null}
-              {apiDescription ? <p>{apiDescription}</p> : null}
+              {apiDescription ? <p>{parser(apiDescription)}</p> : null}
               {/* <p>{store.api.usagePlan.name}</p> */}
             </div>
           </div>
